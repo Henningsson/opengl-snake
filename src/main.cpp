@@ -1,4 +1,6 @@
 #include <SFML/Window.hpp>
+#include "../include/Object.h"
+
 
 using namespace sf;
 
