@@ -9,7 +9,7 @@ Object::Object(vec3 position, vec3 rotation, vec3 scale, Model* model)
 
 Object::~Object()
 {
-
+  delete m_model;
 }
 
 
