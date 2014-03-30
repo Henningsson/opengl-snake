@@ -1,50 +1,44 @@
-#include <SFML/Window.hpp>
-#include "../include/Object.h"
-#include <SFML/OpenGL.hpp>
+#include "../include/GL_utilities.h"
+#include "../include/loadobj.h"
+#include "../include/LoadTGA.h"
+#include "../include/VectorUtils3.h"
 
-using namespace sf;
+#include "../include/object.h"
+#include "../include/common_header.h"
 
+#include <math.h>
 
-int main()
+/* display callback */
+void display_cb()
 {
-  shader_t shader;
+  
+}
 
 
-  sf::Window app(sf::VideoMode(800,600,32), "Horsnake");
+/* timer callback */
+void timer_cb(int value)
+{
+  glutPostRedisplay();
+  glutTimerFunc(FRAMES_PER_SECOND, &timer_cb, value);
+}
 
-  // Set color and depth clear value
-  glClearDepth(1.f);
-  glClearColor(0.f, 0.f, 0.f, 0.f);
-
-  // Enable Z-buffer read and write
+/* Initializes a OpenGL window  */
+void init(int argc, char *argv[])
+{
+  glutInit(&argc, argv);
+  glutInitContextVersion(3,2);
+  glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
+  glutCreateWindow("opengl-snake");
   glEnable(GL_DEPTH_TEST);
-  glDepthMask(GL_TRUE);
-  // Setup a perspective projection
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluPerspective(90.f, 1.f, 1.f, 500.f);
+  glutDisplayFunc(display_cb);
+  glutTimerFunc(FRAMES_PER_SECOND, &timer_cb, 0);
+  
+  // GAME INITIALIZATION HERE
 
+  glutMainLoop();
+}
 
-
-  Object test;
-  test.set_model(LoadModelPlus("models/bottle.obj"));
-  shader = loadShaders("shaders/model.vert", "shaders/model.frag");
-
-  while (app.isOpen())
-    {
-      sf::Event event;
-      while (app.pollEvent(event))
-	{	  
-            if (event.type == sf::Event::Closed)
-                app.close();
-	}
-
-      glBegin(GL_QUADS);
-
-      test.render(shader);
-
-      glEnd();
-
-      app.display();
-    }
+int main(int argc, char *argv[])
+{
+  init(argc,argv);
 }
