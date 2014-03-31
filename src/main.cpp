@@ -7,11 +7,19 @@
 #include "../include/common_header.h"
 
 #include <math.h>
+#include <stdio.h>
+
+Object object;
+shader_t shaders;
 
 /* display callback */
 void display_cb()
 {
-  
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  object.render(shaders);
+
+  glutSwapBuffers();
 }
 
 
@@ -27,11 +35,13 @@ void init(int argc, char *argv[])
 {
   glutInit(&argc, argv);
   glutInitContextVersion(3,2);
+  glutInitWindowSize(WINDOW_WIDTH,WINDOW_HEIGHT);
   glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
   glutCreateWindow("opengl-snake");
   glEnable(GL_DEPTH_TEST);
   glutDisplayFunc(display_cb);
   glutTimerFunc(FRAMES_PER_SECOND, &timer_cb, 0);
+  glClearColor(0.2,0.2,0.6,0);
   
   // GAME INITIALIZATION HERE
 
@@ -40,5 +50,15 @@ void init(int argc, char *argv[])
 
 int main(int argc, char *argv[])
 {
+  object.set_model(LoadModelPlus("models/bottle.obj"));
+
+  shaders = loadShaders("shaders/model.vert","shaders/model.frag");
+
+  if(shaders == 0)
+    {
+      printf("Error loading shaders.\n");
+      return -1;
+    }
+
   init(argc,argv);
 }

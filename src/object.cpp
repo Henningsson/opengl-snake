@@ -46,5 +46,5 @@ void Object::render(const shader_t& shaders)
   mat4 total = T(m_position.x, m_position.y, m_position.z);
 
   glUniformMatrix4fv(glGetUniformLocation(shaders, "transform"), 1, GL_TRUE, total.m); //Upload transform matrix
-  DrawModel(m_model, shaders, "position", "normal", "texcoord");
+  DrawModel(m_model, shaders, "in_position", "in_normal", "in_texcoord");
 }
