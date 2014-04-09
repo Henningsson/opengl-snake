@@ -44,21 +44,19 @@ void init(int argc, char *argv[])
   glClearColor(0.2,0.2,0.6,0);
   
   // GAME INITIALIZATION HERE
+  object.set_model(LoadModelPlus("models/bottle.obj"));
 
-  glutMainLoop();
+  //load shaders
+  shaders = loadShaders("shaders/model.vert","shaders/model.frag");
+  if(shaders == 0)
+    printf("Error loading shaders.\n");
+  else
+    glutMainLoop();
 }
 
 int main(int argc, char *argv[])
 {
   object.set_model(LoadModelPlus("models/bottle.obj"));
-
-  shaders = loadShaders("shaders/model.vert","shaders/model.frag");
-
-  if(shaders == 0)
-    {
-      printf("Error loading shaders.\n");
-      return -1;
-    }
 
   init(argc,argv);
 }

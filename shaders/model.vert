@@ -1,9 +1,11 @@
+#version 130
 
-in	vec3 position;
-in	vec3 normal;
-in 	mat4 transform;
+in	vec3 in_position;
+in	vec3 in_normal;
+in	vec3 in_texcoord;
+uniform mat4 transform;
 
 void main()
 {
-	gl_Position = transform*vec4(position,1.0);
+	gl_Position = vec4(in_position,1.0);
 }

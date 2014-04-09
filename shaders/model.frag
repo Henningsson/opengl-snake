@@ -1,9 +1,8 @@
-out	vec4 color;
-in	vec2 texcoord;
-in	vec3 normal;
-uniform sampler2d texture;
+#version 130
+
+out vec4 out_color;
 
 void main(void)
 {
-	color = texture(tex,texcoord);
+	out_color = vec4(1.0,0.5,0.5,1.0);
 }
