@@ -3,9 +3,12 @@
 in	vec3 in_position;
 in	vec3 in_normal;
 in	vec3 in_texcoord;
+
 uniform mat4 transform;
+uniform mat4 projection;
+uniform mat4 lookat;
 
 void main()
 {
-	gl_Position = vec4(in_position,1.0);
+	gl_Position = projection*lookat*transform*vec4(in_position,1.0);
 }

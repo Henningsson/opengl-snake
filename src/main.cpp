@@ -17,6 +17,13 @@ void display_cb()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  mat4 lookatMatrix = lookAt(0,15,30,-2,10,-2,0,1,0);
+  
+
+  //upload uniforms
+  glUniformMatrix4fv(glGetUniformLocation(shaders, "projection"), 1, GL_TRUE, projectionMatrix);
+  glUniformMatrix4fv(glGetUniformLocation(shaders, "lookat"), 1, GL_TRUE, lookatMatrix.m);
+
   object.render(shaders);
 
   glutSwapBuffers();
@@ -56,6 +63,7 @@ void init(int argc, char *argv[])
 
 int main(int argc, char *argv[])
 {
+  object.set_position(vec3(0,0,-1));
   object.set_model(LoadModelPlus("models/bottle.obj"));
 
   init(argc,argv);
