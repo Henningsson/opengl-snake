@@ -43,7 +43,10 @@ void Object::render(const shader_t& shaders)
 {
   glUseProgram(shaders);
 
-  mat4 total = T(m_position.x, m_position.y, m_position.z);
+  mat4 rot   = Mult(Mult(Rx(m_rotation.x),Ry(m_rotation.y)), Rz(m_rotation.z));
+  mat4 trans = T(m_position.x, m_position.y, m_position.z);
+  
+  mat4 total = Mult(trans,rot);
 
   glUniformMatrix4fv(glGetUniformLocation(shaders, "transform"), 1, GL_TRUE, total.m); //Upload transform matrix
   DrawModel(m_model, shaders, "in_position", "in_normal", "in_texcoord");
