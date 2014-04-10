@@ -1,6 +1,0 @@
-#include "ground.h"
-
-Ground::Ground(vec3 position)
-{
-
-}
