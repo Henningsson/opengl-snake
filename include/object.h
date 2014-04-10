@@ -12,7 +12,7 @@ typedef GLuint shader_t;
 class Object
 {
  public:
-  Object(vec3 position = vec3(0,0,0), vec3 rotation = vec3(0,0,0), vec3 scale = vec3(0,0,0), Model* model = nullptr);
+  Object(vec3 position = vec3(0,0,0), vec3 rotation = vec3(0,0,0), vec3 scale = vec3(1,1,1), Model* model = nullptr);
   virtual ~Object();
 
   void set_position(const vec3& position);
@@ -21,7 +21,11 @@ class Object
   void set_texture(const texture_t& texture);
   void set_model(Model* model);
 
-  void render(const shader_t& shaders);
+  vec3 get_position() const;
+  vec3 get_rotation() const;
+  vec3 get_scale() const;
+
+  virtual void render(const shader_t& shaders);
 
  private:
   vec3      m_position;

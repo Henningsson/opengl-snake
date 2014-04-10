@@ -39,6 +39,22 @@ void Object::set_model(Model* model)
 }
 
 
+vec3 Object::get_position() const
+{
+  return m_position;
+}
+
+vec3 Object::get_rotation() const
+{
+  return m_rotation;
+}
+
+vec3 Object::get_scale() const
+{
+  return m_scale;
+}
+
+
 void Object::render(const shader_t& shaders)
 {
   glUseProgram(shaders);
