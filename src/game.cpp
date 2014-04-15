@@ -36,7 +36,7 @@ void Game::update(float delta)
 void Game::render()
 {
   vec3 pos = m_food.get_position();
-  mat4 lookatMatrix = lookAt(30,15,2,pos.x,pos.y,pos.z,0,1,0);
+  mat4 lookatMatrix = lookAt(10,5,2,pos.x,pos.y,pos.z,0,1,0);
   
   //upload uniforms
   glUniformMatrix4fv(glGetUniformLocation(objshader, "projection"), 1, GL_TRUE, projectionMatrix);
