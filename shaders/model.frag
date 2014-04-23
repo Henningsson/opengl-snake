@@ -1,10 +1,12 @@
 #version 130
 
 in	 vec3	f_normal;
+in	 vec2	f_texcoord;
 
 out	 vec4	out_color;
 
-uniform	 mat4	transform;
+uniform	 sampler2D tex;
+uniform	 mat4	   transform;
 
 void main(void)
 {
@@ -15,5 +17,5 @@ void main(void)
 
 	light *= intensity;
 
-	out_color = vec4(intensity);
+	out_color = texture2D(tex,f_texcoord)*intensity;
 }

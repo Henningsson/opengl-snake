@@ -65,6 +65,12 @@ void Object::render(const shader_t& shaders)
   
   mat4 total = Mult(Mult(trans,rot), scale);
 
+  glUniform1i(glGetUniformLocation(shaders, "tex"),0);
   glUniformMatrix4fv(glGetUniformLocation(shaders, "transform"), 1, GL_TRUE, total.m); //Upload transform matrix
+
+  //set the texture
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, m_texture);
+
   DrawModel(m_model, shaders, "in_position", "in_normal", "in_texcoord");
 }
