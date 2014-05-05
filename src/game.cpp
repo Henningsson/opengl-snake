@@ -1,13 +1,13 @@
 #include "../include/game.h"
 #include "../include/LoadTGA.h"
 
-#define MAP_SIZE 10
-//shaders
-shader_t objshader;
+#define MAP_SIZE 5
 
 //textures
 texture_t groundtexture;
 
+//DEFINITION OF GLOBAL SHADERS GOES HERE
+shader_t objshader;
 
 Game::Game()
 {
@@ -17,9 +17,11 @@ Game::~Game()
 {
 }
 
-
 int Game::init()
 {
+  //Initialize the player
+  m_player.init();
+
   //Initialize the food-piece
   m_food.set_position(vec3(1,1,1));
   m_food.set_model(LoadModelPlus("models/snake_body.obj"));
@@ -72,14 +74,15 @@ void Game::update(float delta)
 
 void Game::render()
 {
-  vec3 pos = m_food.get_position();
+  vec3 pos = m_player.get_position();
   mat4 lookatMatrix = lookAt(10,5,5,pos.x,pos.y,pos.z,0,1,0);
   
   //upload uniforms
   glUniformMatrix4fv(glGetUniformLocation(objshader, "projection"), 1, GL_TRUE, projectionMatrix);
   glUniformMatrix4fv(glGetUniformLocation(objshader, "lookat"), 1, GL_TRUE, lookatMatrix.m);
 
-  m_food.render(objshader);
-
+  //m_food.render(objshader);
   m_ground.render(objshader);
+
+  m_player.render(objshader);
 }

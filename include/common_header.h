@@ -20,5 +20,7 @@ static GLfloat  projectionMatrix[16] = {2.0f*near/(right-left), 0.0f, (right+lef
 typedef GLuint texture_t;
 typedef GLuint shader_t;
 
+//global shaders
+extern shader_t  objshader; //shader for objects
 
 #endif //COMMON_HEADER_H

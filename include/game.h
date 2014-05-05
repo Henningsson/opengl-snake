@@ -6,6 +6,7 @@
 
 #include "object.h"
 #include "common_header.h"
+#include "player.h"
 
 class Game
 {
@@ -21,6 +22,9 @@ class Game
   //Objects
   Object m_ground;
   Object m_food;
+
+  //Player
+  Player m_player;
 };
 
 
