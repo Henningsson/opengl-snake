@@ -68,7 +68,7 @@ int Game::init()
 
 void Game::update(float delta)
 {
-
+  m_player.update(delta);
 }
 
 

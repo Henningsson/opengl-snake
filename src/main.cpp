@@ -27,11 +27,15 @@ void timer_cb(int value)
 {
   glutPostRedisplay();
   glutTimerFunc(FRAMES_PER_SECOND, &timer_cb, value);
+
+  game.update(value);
 }
 
 /* Initializes a OpenGL window  */
 void init(int argc, char *argv[])
 {
+  initKeymapManager(); //for keyboard input
+
   glutInit(&argc, argv);
   glutInitContextVersion(3,2);
   glutInitWindowSize(WINDOW_WIDTH,WINDOW_HEIGHT);
