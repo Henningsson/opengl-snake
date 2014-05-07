@@ -32,7 +32,9 @@ class Player
  private:
   Object    m_body;
   vec3      m_position;
+
   Direction m_direction;
+  Direction m_next_direction;
 };
 
 #endif //PLAYER_H
