@@ -1,5 +1,7 @@
 #include "../include/game.h"
 #include "../include/LoadTGA.h"
+#include <stdlib.h>
+#include <time.h>
 
 #define MAP_SIZE 5
 
@@ -19,11 +21,14 @@ Game::~Game()
 
 int Game::init()
 {
+  //init rand
+  srand(time(nullptr));
+
   //Initialize the player
   m_player.init();
 
   //Initialize the food-piece
-  m_food.set_position(vec3(1,1,1));
+  m_food.set_position(vec3(3,0,3));
   m_food.set_model(LoadModelPlus("models/snake_body.obj"));
 
   //load and compile shaders
@@ -69,6 +74,18 @@ int Game::init()
 void Game::update(float delta)
 {
   m_player.update(delta);
+
+  if(m_player.get_position().x == m_food.get_position().x && m_player.get_position().z == m_food.get_position().z)
+    {
+      m_player.increase_size();
+
+      vec3 newPos;
+      newPos.x = rand() % MAP_SIZE;
+      newPos.z = rand() % MAP_SIZE;
+
+      m_food.set_position(newPos);
+    }
+
 }
 
 
@@ -81,8 +98,8 @@ void Game::render()
   glUniformMatrix4fv(glGetUniformLocation(objshader, "projection"), 1, GL_TRUE, projectionMatrix);
   glUniformMatrix4fv(glGetUniformLocation(objshader, "lookat"), 1, GL_TRUE, lookatMatrix.m);
 
-  //m_food.render(objshader);
-  m_ground.render(objshader);
+  m_food.render(objshader);
+  //m_ground.render(objshader);
 
   m_player.render(objshader);
 }

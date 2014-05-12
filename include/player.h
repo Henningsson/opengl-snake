@@ -18,7 +18,7 @@ enum Direction
 
 //cannot use deque or other container because of a retarded bug with deque&opengl libs...
 //so must go with an simple array to store the positions instead..
-#define MAXSIZE 30 
+#define MAXSIZE 128 
 
 class Player
 {
@@ -32,6 +32,7 @@ class Player
   void render(shader_t shader);
 
   vec3 get_position() const;
+  void increase_size();
 
  private:
   Object    m_body;
@@ -40,6 +41,8 @@ class Player
 
   vec3 m_nodes[MAXSIZE];
   int  m_size;
+
+  void move();
 };
 
 #endif //PLAYER_

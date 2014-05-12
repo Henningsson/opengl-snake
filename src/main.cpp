@@ -9,7 +9,7 @@
 
 Game game;
 
-/* display callback */
+/* render callback */
 void display_cb()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -19,14 +19,16 @@ void display_cb()
   glutSwapBuffers();
 }
 
-
-/* timer callback */
-void timer_cb(int value)
+/* render timer callback */
+void render_cb(int value)
 {
-  glutPostRedisplay();
-  glutTimerFunc(FRAMES_PER_SECOND, &timer_cb, value);
+  if(value>1)
+    value = 0;
 
   game.update(value);
+
+  glutPostRedisplay();
+  glutTimerFunc(FRAMES_PER_SECOND, &render_cb, ++value);
 }
 
 /* Initializes a OpenGL window  */
@@ -41,8 +43,8 @@ void init(int argc, char *argv[])
   glutCreateWindow("opengl-snake");
   glEnable(GL_DEPTH_TEST);
   glutDisplayFunc(display_cb);
-  glutTimerFunc(FRAMES_PER_SECOND, &timer_cb, 0);
   glClearColor(0.2,0.2,0.6,0);
+  glutTimerFunc(FRAMES_PER_SECOND, &render_cb, 0);
   
   // GAME INITIALIZATION HERE 
   if( game.init() != 0 )
