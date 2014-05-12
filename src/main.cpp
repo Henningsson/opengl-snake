@@ -6,8 +6,6 @@
 #include "../include/game.h"
 #include "../include/common_header.h"
 
-#include <math.h>
-#include <stdio.h>
 
 Game game;
 

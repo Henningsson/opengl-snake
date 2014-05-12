@@ -6,6 +6,7 @@ in	vec2 in_texcoord;
 
 out	vec3 f_normal;
 out	vec2 f_texcoord;
+out	vec3 vert;
 
 uniform mat4 transform;
 uniform mat4 projection;
