@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define MAP_SIZE 5
+#define MAP_SIZE 15
 
 //textures
 texture_t groundtexture;
@@ -29,7 +29,7 @@ int Game::init()
 
   //Initialize the food-piece
   m_food.set_position(vec3(3,0,3));
-  m_food.set_model(LoadModelPlus("models/snake_body.obj"));
+  m_food.set_model(LoadModelPlus("models/food.obj"));
 
   //load and compile shaders
   objshader = loadShaders("shaders/model.vert", "shaders/model.frag");
@@ -65,6 +65,7 @@ int Game::init()
   };
 
   m_ground.set_model(LoadDataToModel(polygon, normals, texCoords, NULL, indices, 12, 6));
+  //m_ground.set_model(LoadModelPlus("models/ground.obj"));
   m_ground.set_texture(groundtexture);
 
   return 0;
@@ -92,14 +93,14 @@ void Game::update(float delta)
 void Game::render()
 {
   vec3 pos = m_player.get_position();
-  mat4 lookatMatrix = lookAt(2.5,8,10,pos.x,pos.y,pos.z,0,1,0);
+  mat4 lookatMatrix = lookAt(MAP_SIZE/2,MAP_SIZE/1.5,MAP_SIZE+2,pos.x,pos.y,pos.z,0,1,0);
   
   //upload uniforms
   glUniformMatrix4fv(glGetUniformLocation(objshader, "projection"), 1, GL_TRUE, projectionMatrix);
   glUniformMatrix4fv(glGetUniformLocation(objshader, "lookat"), 1, GL_TRUE, lookatMatrix.m);
 
   m_food.render(objshader);
-  //m_ground.render(objshader);
+  m_ground.render(objshader);
 
   m_player.render(objshader);
 }

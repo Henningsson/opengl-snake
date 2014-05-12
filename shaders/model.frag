@@ -2,6 +2,7 @@
 
 in	 vec3	f_normal;
 in	 vec2	f_texcoord;
+in	 vec3 	f_vert;
 
 out	 vec4	out_color;
 
@@ -10,7 +11,7 @@ uniform	 mat4	   transform;
 
 void main(void)
 {
-	vec3 light = vec3(25.0, 100.0 ,25.0);
+	vec3 light = vec3(25,100,25) - f_vert;
 	float intensity = dot(normalize(light), normalize(f_normal));
 	intensity = max(0,intensity);
 

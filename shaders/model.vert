@@ -6,7 +6,7 @@ in	vec2 in_texcoord;
 
 out	vec3 f_normal;
 out	vec2 f_texcoord;
-out	vec3 vert;
+out	vec3 f_vert;
 
 uniform mat4 transform;
 uniform mat4 projection;
@@ -16,6 +16,7 @@ void main()
 {
 	gl_Position = projection*lookat*transform*vec4(in_position,1.0);
 
-	f_normal = mat3(transform)*in_normal;
+	f_normal   = mat3(transform)*in_normal;
 	f_texcoord = in_texcoord;
+	f_vert     = in_position;
 }
