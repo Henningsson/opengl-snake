@@ -5,6 +5,8 @@
 #define WINDOW_HEIGHT     480
 #define WINDOW_WIDTH      640
 
+#define MAP_SIZE 15
+
 
 #define near 1.0
 #define far 500.0
