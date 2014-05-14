@@ -1,5 +1,6 @@
 #include "../include/player.h"
 #include <cmath>
+#include <stdlib.h>
 
 Player::Player(int x, int z, Direction direction)
   : m_direction(direction), m_startpos(vec3(x,0,z))
@@ -91,6 +92,7 @@ void Player::move()
       break;
     }
 
+  node.y = (static_cast <float> (rand()) / static_cast <float> (RAND_MAX))/2;
   m_nodes[0] = node;
 }
 

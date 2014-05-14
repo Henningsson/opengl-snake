@@ -43,7 +43,7 @@ void init(int argc, char *argv[])
   glutCreateWindow("opengl-snake");
   glEnable(GL_DEPTH_TEST);
   glutDisplayFunc(display_cb);
-  glClearColor(0.2,0.2,0.6,0);
+  glClearColor(0.5,0.5,1.0,0);
   glutTimerFunc(FRAMES_PER_SECOND, &render_cb, 0);
   
   // GAME INITIALIZATION HERE 

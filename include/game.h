@@ -22,6 +22,7 @@ class Game
   //Objects
   Object m_ground;
   Object m_food;
+  Object m_skybox;
 
   //Player
   Player m_player;

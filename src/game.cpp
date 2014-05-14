@@ -1,5 +1,8 @@
 #include "../include/game.h"
 #include "../include/LoadTGA.h"
+#include "../include/object.h"
+#include "../include/MicroGlut.h"
+
 #include <stdlib.h>
 #include <time.h>
 
@@ -46,6 +49,7 @@ int Game::init()
   //Initialize the skybox
   m_skybox.set_model(LoadModelPlus("models/skybox.obj"));
   m_skybox.set_texture(skyboxtexture);
+  m_skybox.set_position(vec3(0,0,0));
 
 
   //Initialize the ground
@@ -102,18 +106,30 @@ void Game::update(float delta)
 void Game::render()
 {
   vec3 pos = m_player.get_position();
+  pos.y = 1.0;
   mat4 lookatMatrix = lookAt(MAP_SIZE/2,MAP_SIZE/1.5,MAP_SIZE+2,pos.x,pos.y,pos.z,0,1,0);
   
   //upload uniforms
   glUniformMatrix4fv(glGetUniformLocation(objshader, "projection"), 1, GL_TRUE, projectionMatrix);
   glUniformMatrix4fv(glGetUniformLocation(objshader, "lookat"), 1, GL_TRUE, lookatMatrix.m);
 
+  // DRAW SKYBOX
+  // the skybox requires some special
+  // attention..
   glDisable(GL_DEPTH_TEST);
-  m_skybox.render(skyboxshader);
+  mat4 rot = Rx(0.0f);
+  mat4 trans = T(0,0,0);
+  mat4 total = Mult(trans,rot);
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, skyboxtexture);
+  glUseProgram(skyboxshader); //aktivera shadern
+  glUniform1i(glGetUniformLocation(skyboxshader, "texture"), 0);
+  glUniformMatrix4fv(glGetUniformLocation(skyboxshader, "transform"), 1, GL_TRUE, total.m); // Upload our matrix
+  glUniformMatrix4fv(glGetUniformLocation(skyboxshader, "lookat"), 1, GL_TRUE, lookatMatrix.m); // Upload our matrix
+  DrawModel(m_skybox.get_model(), skyboxshader, "in_position", "in_normal", "in_texcoord");
   glEnable(GL_DEPTH_TEST);
 
   m_food.render(objshader);
   m_ground.render(objshader);
-
   m_player.render(objshader);
 }

@@ -17,3 +17,4 @@ void main(void)
 	gl_Position = projection*vec4(mat3(lookat)*in_position,1.0);
 	f_texcoord = in_texcoord;
 }
+x
