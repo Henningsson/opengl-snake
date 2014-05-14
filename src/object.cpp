@@ -54,6 +54,11 @@ vec3 Object::get_scale() const
   return m_scale;
 }
 
+Model* Object::get_model() const
+{
+  return m_model;
+}
+
 
 void Object::render(const shader_t& shaders)
 {

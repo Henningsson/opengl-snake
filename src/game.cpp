@@ -7,9 +7,11 @@
 
 //textures
 texture_t groundtexture;
+texture_t skyboxtexture;
 
 //DEFINITION OF GLOBAL SHADERS GOES HERE
 shader_t objshader;
+shader_t skyboxshader;
 
 Game::Game()
 {
@@ -24,20 +26,27 @@ int Game::init()
   //init rand
   srand(time(nullptr));
 
+  //load and compile shaders
+  objshader    = loadShaders("shaders/model.vert", "shaders/model.frag");
+  skyboxshader = loadShaders("shaders/skybox.vert", "shaders/skybox.frag");
+  if(objshader == 0 || skyboxshader == 0)
+    return -1;
+
+  //load textures  
+  LoadTGATextureSimple("textures/ground.tga", &groundtexture);
+  LoadTGATextureSimple("textures/skybox.tga", &skyboxtexture);
+
   //Initialize the player
   m_player.init();
 
   //Initialize the food-piece
   m_food.set_position(vec3(3,0,3));
   m_food.set_model(LoadModelPlus("models/food.obj"));
+  
+  //Initialize the skybox
+  m_skybox.set_model(LoadModelPlus("models/skybox.obj"));
+  m_skybox.set_texture(skyboxtexture);
 
-  //load and compile shaders
-  objshader = loadShaders("shaders/model.vert", "shaders/model.frag");
-  if(objshader == 0)
-    return -1;
-
-  //load textures  
-  LoadTGATextureSimple("textures/ground.tga", &groundtexture);
 
   //Initialize the ground
   GLfloat polygon[12] = {
@@ -98,6 +107,10 @@ void Game::render()
   //upload uniforms
   glUniformMatrix4fv(glGetUniformLocation(objshader, "projection"), 1, GL_TRUE, projectionMatrix);
   glUniformMatrix4fv(glGetUniformLocation(objshader, "lookat"), 1, GL_TRUE, lookatMatrix.m);
+
+  glDisable(GL_DEPTH_TEST);
+  m_skybox.render(skyboxshader);
+  glEnable(GL_DEPTH_TEST);
 
   m_food.render(objshader);
   m_ground.render(objshader);

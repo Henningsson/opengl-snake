@@ -24,6 +24,7 @@ class Object
   vec3 get_position() const;
   vec3 get_rotation() const;
   vec3 get_scale() const;
+  Model* get_model() const;
 
   virtual void render(const shader_t& shaders);
 
