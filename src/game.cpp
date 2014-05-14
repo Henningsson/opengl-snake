@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define MAP_SIZE 15
 
 //textures
 texture_t groundtexture;
@@ -49,37 +48,9 @@ int Game::init()
   //Initialize the skybox
   m_skybox.set_model(LoadModelPlus("models/skybox.obj"));
   m_skybox.set_texture(skyboxtexture);
-  m_skybox.set_position(vec3(0,0,0));
+  m_skybox.set_position(vec3(0,-10000,0));
 
-
-  //Initialize the ground
-  GLfloat polygon[12] = {
-    0.f,0.f,0.0f,
-    MAP_SIZE,0.f,0.0f,
-    0.f,0.f,MAP_SIZE,
-    MAP_SIZE,0.f,MAP_SIZE
-  };
-  GLfloat normals[12] = {
-    0.0f, 1.f,0.0f,
-    0.0f,1.f,0.0f,
-    0.0f,1.f,0.0f,
-    0.0f,1.f,0.0f
-  };
-  GLuint indices[6] = {
-    0,1,3,
-    0,2,3
-  };
-
-  GLfloat texCoords[8] = {
-    0,0,
-    MAP_SIZE,0,
-    0,MAP_SIZE,
-    MAP_SIZE,MAP_SIZE
-  };
-
-  m_ground.set_model(LoadDataToModel(polygon, normals, texCoords, NULL, indices, 12, 6));
-  //m_ground.set_model(LoadModelPlus("models/ground.obj"));
-  m_ground.set_texture(groundtexture);
+  m_level.generate();
 
   return 0;
 }
@@ -107,7 +78,7 @@ void Game::render()
 {
   vec3 pos = m_player.get_position();
   pos.y = 1.0;
-  mat4 lookatMatrix = lookAt(MAP_SIZE/2,MAP_SIZE/1.5,MAP_SIZE+2,pos.x,pos.y,pos.z,0,1,0);
+  mat4 lookatMatrix = lookAt( MAP_SIZE/2, MAP_SIZE/1.5, MAP_SIZE+5 ,pos.x,pos.y,pos.z,0,1,0);
   
   //upload uniforms
   glUniformMatrix4fv(glGetUniformLocation(objshader, "projection"), 1, GL_TRUE, projectionMatrix);
@@ -128,8 +99,8 @@ void Game::render()
   glUniformMatrix4fv(glGetUniformLocation(skyboxshader, "lookat"), 1, GL_TRUE, lookatMatrix.m); // Upload our matrix
   DrawModel(m_skybox.get_model(), skyboxshader, "in_position", "in_normal", "in_texcoord");
   glEnable(GL_DEPTH_TEST);
-
+  
+  m_level.render(objshader);
   m_food.render(objshader);
-  m_ground.render(objshader);
   m_player.render(objshader);
 }
