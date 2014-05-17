@@ -6,7 +6,7 @@
 #define WINDOW_WIDTH      640
 
 #define MAP_SIZE 15
-
+#define ELEVATION 25
 
 #define near 1.0
 #define far 500.0
