@@ -7,6 +7,8 @@
 #include "object.h"
 #include "common_header.h"
 #include "player.h"
+#include "level.h"
+
 
 class Game
 {
@@ -20,12 +22,14 @@ class Game
 
  private:
   //Objects
-  Object m_ground;
   Object m_food;
   Object m_skybox;
 
   //Player
   Player m_player;
+
+  //Level
+  Level  m_level;
 };
 
 

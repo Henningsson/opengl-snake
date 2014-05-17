@@ -78,7 +78,7 @@ void Game::render()
 {
   vec3 pos = m_player.get_position();
   pos.y = 1.0;
-  mat4 lookatMatrix = lookAt( MAP_SIZE/2, MAP_SIZE/1.5, MAP_SIZE+5 ,pos.x,pos.y,pos.z,0,1,0);
+  mat4 lookatMatrix = lookAt( MAP_SIZE/2, MAP_SIZE, MAP_SIZE+5 ,MAP_SIZE/2,pos.y,MAP_SIZE/2,0,1,0);
   
   //upload uniforms
   glUniformMatrix4fv(glGetUniformLocation(objshader, "projection"), 1, GL_TRUE, projectionMatrix);

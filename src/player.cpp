@@ -1,6 +1,8 @@
 #include "../include/player.h"
+#include "../include/game.h"
 #include <cmath>
 #include <stdlib.h>
+
 
 Player::Player(int x, int z, Direction direction)
   : m_direction(direction), m_startpos(vec3(x,0,z))
@@ -25,7 +27,7 @@ void Player::reset()
   switch(m_direction)
     {
     case LEFT:
-      m_nodes[1] = vec3(m_startpos.x+1,0,m_startpos.z);
+      m_nodes[1] = vec3(m_startpos.x+1, 0, m_startpos.z);
       m_nodes[2] = vec3(m_startpos.x+2,0,m_startpos.z);
       break;
     case RIGHT:
@@ -92,7 +94,16 @@ void Player::move()
       break;
     }
 
-  node.y = (static_cast <float> (rand()) / static_cast <float> (RAND_MAX))/2;
+  //Keep within boundaries
+  if(node.x < 0)
+    node.x = MAP_SIZE-1;
+  else if(node.x > MAP_SIZE-1)
+    node.x = 0;
+  if(node.z < 0)
+    node.z = MAP_SIZE-1;
+  else if(node.z > MAP_SIZE-1)
+    node.z = 0;
+
   m_nodes[0] = node;
 }
 
