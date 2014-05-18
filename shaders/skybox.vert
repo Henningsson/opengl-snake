@@ -13,7 +13,6 @@ uniform mat4 lookat;
 
 void main(void)
 {
-	vec3 n = in_normal; //to get rid off debug msg
 	gl_Position = projection*vec4(mat3(lookat)*in_position,1.0);
 	f_texcoord = in_texcoord;
 }

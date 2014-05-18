@@ -16,9 +16,9 @@ enum Direction
     RIGHT
   };
 
+#define MAX_SIZE MAP_SIZE*MAP_SIZE
 //cannot use deque or other container because of a retarded bug with deque&opengl libs...
 //so must go with an simple array to store the positions instead..
-#define MAXSIZE 128 
 
 class Player
 {
@@ -39,7 +39,7 @@ class Player
   Direction m_direction;
   vec3 m_startpos;
 
-  vec3 m_nodes[MAXSIZE];
+  vec3 m_nodes[MAX_SIZE];
   int  m_size;
 
   void move();

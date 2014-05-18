@@ -18,6 +18,7 @@ void Player::init()
 {
   //init model
   m_body.set_model(LoadModelPlus("models/snake_body.obj"));
+  m_body.set_color(vec3(0.5,0.9,0.5));
 }
 
 void Player::reset()
@@ -70,7 +71,7 @@ void Player::update(float delta)
 void Player::move()
 { 
   //copy each node back a step, and insert the new node in the front.
-  vec3 buffer[MAXSIZE] = m_nodes;
+  vec3 buffer[MAX_SIZE] = m_nodes;
 
   for(int i = 0; i < m_size-1; ++i)
     {

@@ -6,6 +6,7 @@ in	 vec3 	f_vert;
 
 out	 vec4	out_color;
 
+uniform  vec3      color;
 uniform	 sampler2D tex;
 uniform	 mat4	   transform;
 
@@ -16,15 +17,13 @@ void main(void)
 	intensity = max(0,intensity);
 
 
-	vec4 color;
-	if (intensity > 0.95)
-		color = vec4(1.0,0.5,0.5,1.0);
-	else if (intensity > 0.5)
-		color = vec4(0.6,0.3,0.3,1.0);
+	vec4 c = vec4(color.x,color.y,color.z,1);
+	/*if (intensity > 0.5)
+		c = vec4(color.x - 0.2, color.y - 0.2, color.z - 0.2,1.0);
 	else if (intensity > 0.25)
-		color = vec4(0.4,0.2,0.2,1.0);
+		c = vec4(color.x - 0.4, color.y - 0.4, color.z - 0.4,1.0);
 	else
-		color = vec4(0.2,0.1,0.1,1.0);
+		c = vec4(color.x - 0.6, color.y - 0.6, color.z - 0.6,1.0);*/
 		
-	out_color = texture2D(tex,f_texcoord)+color*intensity;
+	out_color = texture2D(tex,f_texcoord)+c*intensity;
 }

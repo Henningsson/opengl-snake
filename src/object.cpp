@@ -1,8 +1,8 @@
 #include "../include/object.h"
 #include "../include/MicroGlut.h"
 
-Object::Object(vec3 position, vec3 rotation, vec3 scale, Model* model)
-  : m_position(position), m_rotation(rotation), m_scale(scale), m_model(model)
+Object::Object(vec3 position, vec3 rotation, vec3 scale, vec3 color, Model* model)
+  : m_position(position), m_rotation(rotation), m_scale(scale), m_color(color), m_model(model)
 {
   
 }
@@ -33,6 +33,11 @@ void Object::set_texture(const texture_t& texture)
   m_texture = texture;
 }
 
+void Object::set_color(const vec3& color)
+{
+  m_color = color;
+}
+
 void Object::set_model(Model* model)
 {
   m_model = model;
@@ -54,6 +59,11 @@ vec3 Object::get_scale() const
   return m_scale;
 }
 
+vec3 Object::get_color() const
+{
+  return m_color;
+}
+
 Model* Object::get_model() const
 {
   return m_model;
@@ -71,6 +81,7 @@ void Object::render(const shader_t& shaders)
   mat4 total = Mult(Mult(trans,rot), scale);
 
   glUniform1i(glGetUniformLocation(shaders, "tex"),0);
+  glUniform3f(glGetUniformLocation(shaders, "color"), m_color.x, m_color.y, m_color.z);
   glUniformMatrix4fv(glGetUniformLocation(shaders, "transform"), 1, GL_TRUE, total.m); //Upload transform matrix
 
   //set the texture

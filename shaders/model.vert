@@ -8,6 +8,7 @@ out	vec3 f_normal;
 out	vec2 f_texcoord;
 out	vec3 f_vert;
 
+uniform vec3 color;
 uniform mat4 transform;
 uniform mat4 projection;
 uniform mat4 lookat;

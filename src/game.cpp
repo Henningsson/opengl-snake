@@ -43,7 +43,8 @@ int Game::init()
 
   //Initialize the food-piece
   m_food.set_position(vec3(3,0,3));
-  m_food.set_model(LoadModelPlus("models/food.obj"));
+  m_food.set_model(LoadModelPlus("models/snake_body.obj"));
+  m_food.set_color(vec3(0.7,0.3,0.3));
   
   //Initialize the skybox
   m_skybox.set_model(LoadModelPlus("models/skybox.obj"));
@@ -97,7 +98,7 @@ void Game::render()
   glUniform1i(glGetUniformLocation(skyboxshader, "texture"), 0);
   glUniformMatrix4fv(glGetUniformLocation(skyboxshader, "transform"), 1, GL_TRUE, total.m); // Upload our matrix
   glUniformMatrix4fv(glGetUniformLocation(skyboxshader, "lookat"), 1, GL_TRUE, lookatMatrix.m); // Upload our matrix
-  DrawModel(m_skybox.get_model(), skyboxshader, "in_position", "in_normal", "in_texcoord");
+  //DrawModel(m_skybox.get_model(), skyboxshader, "in_position", "in_normal", "in_texcoord");
   glEnable(GL_DEPTH_TEST);
   
   m_level.render(objshader);
