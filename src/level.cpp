@@ -13,14 +13,14 @@ void Level::generate()
 {
   //Load the model
   m_tile.set_model(LoadModelPlus("models/ground.obj"));
-  m_tile.set_color(vec3(0.4,0.7,0.3));
+  m_tile.set_color(vec3(0.5,0.8,0.9));
   
   //Generate the level
   for(int x = 0; x < MAP_SIZE; ++x)
     {
       for(int z = 0; z < MAP_SIZE; ++z)
 	{
-	  m_tiles[x][z] = -ELEVATION; // + (static_cast <float> (rand()) / static_cast <float> (RAND_MAX))/3;
+	  m_tiles[x][z] = -ELEVATION; // + (static_cast <float> (rand()) / static_cast <float> (RAND_MAX))/2;
 	}
     }
 }

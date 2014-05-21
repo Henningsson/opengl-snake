@@ -17,7 +17,7 @@ void main()
 {
 	gl_Position = projection*lookat*transform*vec4(in_position,1.0);
 
-	f_normal   = mat3(transform)*in_normal;
+	f_normal   = mat3(lookat*transform)*in_normal;
 	f_texcoord = in_texcoord;
-	f_vert     = in_position;
+	f_vert     = vec3(lookat*transform*vec4(in_position,1.0));
 }

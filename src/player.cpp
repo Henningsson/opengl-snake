@@ -5,7 +5,7 @@
 
 
 Player::Player(int x, int z, Direction direction)
-  : m_direction(direction), m_startpos(vec3(x,0,z))
+  : m_direction(direction), m_startpos(vec3(x,0,z)), m_dead(false)
 {
   reset();
 }
@@ -18,11 +18,12 @@ void Player::init()
 {
   //init model
   m_body.set_model(LoadModelPlus("models/snake_body.obj"));
-  m_body.set_color(vec3(0.5,0.9,0.5));
+  m_body.set_color(vec3(0.65,0.95,1));
 }
 
 void Player::reset()
 {
+  m_dead = false;
   m_size = 3;
 
   switch(m_direction)
@@ -51,17 +52,24 @@ void Player::reset()
 void Player::update(float delta)
 {
   //Handle controls & update direction
-  if(keyIsDown('w') && m_direction != DOWN )
+  if((keyIsDown('w') || keyIsDown('W')) && m_direction != DOWN )
     m_direction = UP;
-  else if(keyIsDown('s') && m_direction != UP)
+  else if( (keyIsDown('s') || keyIsDown('S')) && m_direction != UP)
     m_direction = DOWN;
-  else if(keyIsDown('a') && m_direction != RIGHT)
+  else if( (keyIsDown('a') || keyIsDown('A')) && m_direction != RIGHT)
     m_direction = LEFT;
-  else if(keyIsDown('d') && m_direction != LEFT)
+  else if( (keyIsDown('d') || keyIsDown('D')) && m_direction != LEFT)
     m_direction = RIGHT;
 
   if(delta == 0)
     move();
+
+  //check if dead
+  for(int i = 1; i < m_size-1; ++i)
+    {
+      if(m_nodes[0].x == m_nodes[i].x && m_nodes[0].z == m_nodes[i].z)
+	m_dead = true;
+    }
 }
 
 /* Movement is based on FPS, this should
@@ -121,6 +129,26 @@ void Player::render(shader_t shader)
 vec3 Player::get_position() const
 {
   return m_nodes[0];
+}
+
+int Player::get_size() const
+{
+  return m_size;
+}
+
+bool Player::is_dead() const
+{
+  return m_dead;
+}
+
+bool Player::is_inside(const int& x, const int& z) const
+{
+  for(int i = 0; i < m_size; ++i)
+    {
+      if(m_nodes[i].x == x && m_nodes[i].z == z)
+	return true;
+    }
+  return false;
 }
 
 void Player::increase_size()

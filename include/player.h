@@ -32,12 +32,16 @@ class Player
   void render(shader_t shader);
 
   vec3 get_position() const;
+  int  get_size() const;
+  bool is_dead() const;
+  bool is_inside(const int& x, const int& z) const;
   void increase_size();
 
  private:
   Object    m_body;
   Direction m_direction;
   vec3 m_startpos;
+  bool m_dead;
 
   vec3 m_nodes[MAX_SIZE];
   int  m_size;
