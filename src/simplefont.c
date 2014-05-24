@@ -252,8 +252,8 @@ static GLuint fontTexture;
 static void fontToTexture()
 {
 	GLuint i, j, tex;
-	char *data = malloc(128*128*4); // 128x128 pixels, 4 bytes each
 	glGetIntegerv(GL_TEXTURE_BINDING_2D, &tex); // Save current
+	char *data = malloc(128*128*4); // 128x128 pixels, 4 bytes each
 	// Why is GL_INTENSITY not available?
 	
 	// Upper case

@@ -123,6 +123,6 @@ void Game::render()
   m_food.render(objshader);
   m_player.render(objshader);
 
-  sfDrawString(10,10,"TEST");
+  sfDrawString(5*t,10*t,"TEST");
 }
  

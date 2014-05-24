@@ -9,17 +9,8 @@ extern "C" {
 	#include <OpenGL/gl3.h>
 	#include "MicroGlut.h"
 #else
-	#ifdef _WIN32
-	    #include <GL/glew.h>
-		#include <GL/glut.h>
-	 
-//	    #include <stdlib.h>
-//	    #include <stdio.h>
-//	    #include <stddef.h>
-//	    #include <string.h>
-	#else
-		#include <GL/gl.h>
-	#endif
+	#include <GL/gl.h>	
+	#include "MicroGlut.h"
 #endif
 #include <stdlib.h>
 #include <string.h>
